@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return {
-        "message": "Hello from Flask running on AWS ECS Fargate!",
+        "message": "CI/CD Deployment Successful!",
         "status": "success",
         "environment": os.getenv("APP_ENV", "development")
     }
