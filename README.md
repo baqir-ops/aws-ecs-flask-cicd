@@ -258,7 +258,7 @@ Code Push → CI/CD Trigger → ECS Deployment → Live Update
 ## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/aws-ecs-flask-cicd.git
+git clone https://github.com/baqir-ops/aws-ecs-flask-cicd.git
 cd aws-ecs-flask-cicd
 ```
 
