@@ -1,12 +1,6 @@
 # 🚀 AWS ECS Fargate Flask CI/CD Pipeline
 
 > A production-style Flask deployment using **Docker, Gunicorn, Amazon ECS Fargate, Amazon ECR, Application Load Balancer (ALB), CloudWatch Logs, and GitHub Actions CI/CD**.
->
-> 🌍 Live Application:
-
-http://flask-ecs-alb-1857109335.ap-south-1.elb.amazonaws.com
-
-Note: The application is deployed on AWS ECS Fargate and may occasionally be unavailable due to cloud resource lifecycle or lab environment constraints.
 
 ![AWS](https://img.shields.io/badge/AWS-ECS%20Fargate-orange?logo=amazonaws)
 ![Docker](https://img.shields.io/badge/Docker-Containerization-blue?logo=docker)
@@ -36,16 +30,9 @@ The goal of this project was to simulate a **real-world DevOps workflow** where 
 
 ---
 
-
 ## 🏗️ Architecture Diagram
 
 ![Architecture Diagram](screenshots/11-architecture-diagram.png)
-
-### Architecture Flow
-
-GitHub → GitHub Actions → Docker Build → Amazon ECR → Amazon ECS Fargate → Application Load Balancer (ALB) → User
-
-CloudWatch Logs ← ECS Fargate (Monitoring & Troubleshooting)
 
 ## Deployment Flow
 
@@ -265,7 +252,7 @@ Code Push → CI/CD Trigger → ECS Deployment → Live Update
 ## Clone Repository
 
 ```bash
-git clone https://github.com/baqir-ops/aws-ecs-flask-cicd.git
+git clone https://github.com/YOUR_USERNAME/aws-ecs-flask-cicd.git
 cd aws-ecs-flask-cicd
 ```
 
@@ -505,7 +492,7 @@ Built a production-style containerized Flask application deployed on **AWS ECS F
 
 ### Muhammad Baqir Nawaz
 
-**Self-Taught Cloud & DevOps Engineer**
+**Aspiring Cloud & DevOps Engineer**
 
 Passionate about building real-world cloud infrastructure and automation using:
 
