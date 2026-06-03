@@ -2,10 +2,11 @@
 
 > A production-style Flask deployment using **Docker, Gunicorn, Amazon ECS Fargate, Amazon ECR, Application Load Balancer (ALB), CloudWatch Logs, and GitHub Actions CI/CD**.
 >
-> ## 🌐 Live Demo
+> 🌍 Live Application:
 
-**Application URL:**  
 http://flask-ecs-alb-1857109335.ap-south-1.elb.amazonaws.com
+
+Note: The application is deployed on AWS ECS Fargate and may occasionally be unavailable due to cloud resource lifecycle or lab environment constraints.
 
 ![AWS](https://img.shields.io/badge/AWS-ECS%20Fargate-orange?logo=amazonaws)
 ![Docker](https://img.shields.io/badge/Docker-Containerization-blue?logo=docker)
