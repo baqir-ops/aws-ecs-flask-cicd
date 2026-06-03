@@ -32,7 +32,15 @@ The goal of this project was to simulate a **real-world DevOps workflow** where 
 
 ## 🏗️ Architecture Diagram
 
-![Architecture Diagram](screenshots/11-architecture-diagram.png)
+<p align="center">
+  <img src="screenshots/11-architecture-diagram.png" width="900">
+</p>
+
+### Architecture Flow
+
+GitHub → GitHub Actions → Docker Build → Amazon ECR → Amazon ECS Fargate → Application Load Balancer (ALB) → User
+
+CloudWatch Logs ← ECS Fargate (Monitoring & Troubleshooting)
 
 ## Deployment Flow
 
