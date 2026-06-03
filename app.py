@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return {
-        "message": "CI/CD Deployment Successful!",
+        "message": "Auto Deployment Verified!",
         "status": "success",
         "environment": os.getenv("APP_ENV", "development")
     }
