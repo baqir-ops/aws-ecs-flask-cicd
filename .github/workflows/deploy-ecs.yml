@@ -10,7 +10,7 @@ env:
   AWS_ACCOUNT_ID: 950165721116
   ECR_REPOSITORY: aws-ecs-flask-cicd
   ECS_CLUSTER: aws-ecs-flask-cluster-v2
-  ECS_SERVICE: flask-ecs-task-service-qz9m3kup
+  ECS_SERVICE: flask-ecs-service
   CONTAINER_NAME: flask-ecs-container
 
 jobs:
