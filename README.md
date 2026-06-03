@@ -33,7 +33,7 @@ The goal of this project was to simulate a **real-world DevOps workflow** where 
 ## 🏗️ Architecture Diagram
 
 <p align="center">
-  <img src="screenshots/11-architecture-diagram.png" width="900">
+  <img src="./screenshots/11-architecture-diagram.png" alt="Architecture Diagram" width="100%">
 </p>
 
 ### Architecture Flow
