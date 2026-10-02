@@ -32,49 +32,39 @@ The goal of this project was to simulate a **real-world DevOps workflow** where 
 
 ## 🏗️ Architecture Diagram
 
-<img width="100%" alt="Architecture Diagram" src="https://raw.githubusercontent.com/baqir-ops/aws-ecs-flask-cicd/main/screenshots/11-architecture-diagram.png">
+```mermaid
+flowchart LR
+    User["Users"]
 
-### Architecture Flow
+    subgraph GitHub
+        Repo["Repository<br/>push to main"]
+        Actions["GitHub Actions"]
+        Repo --> Actions
+    end
 
-GitHub → GitHub Actions → Docker Build → Amazon ECR → Amazon ECS Fargate → Application Load Balancer (ALB) → User
+    subgraph AWS["AWS · ap-south-1"]
+        ECR["Amazon ECR<br/>aws-ecs-flask-cicd:latest"]
 
-CloudWatch Logs ← ECS Fargate (Monitoring & Troubleshooting)
+        subgraph ECS["Amazon ECS"]
+            Service["ECS service<br/>flask-ecs-service"]
+            Task["Fargate task<br/>Flask + Gunicorn :5000"]
+            Service --> Task
+        end
 
-## Deployment Flow
+        ALB["Application Load Balancer"]
+        TargetGroup["Target group<br/>health check: /health"]
+        Logs["CloudWatch Logs"]
 
-```text
-GitHub Repository
-        ↓
-GitHub Actions (CI/CD Pipeline)
-        ↓
-Docker Image Build
-        ↓
-Amazon ECR
-        ↓
-Amazon ECS Fargate
-        ↓
-Application Load Balancer (ALB)
-        ↓
-Flask Application
+        ALB --> TargetGroup --> Task
+        Task -->|"Container logs"| Logs
+    end
+
+    Actions -->|"Build and push image"| ECR
+    Actions -->|"Force new deployment"| Service
+    User --> ALB
 ```
 
-## CI/CD Workflow
-
-```text
-Code Change
-    ↓
-Git Push
-    ↓
-GitHub Actions Triggered
-    ↓
-Docker Image Build
-    ↓
-Push Image to Amazon ECR
-    ↓
-ECS Service Update
-    ↓
-Automatic Production Deployment
-```
+GitHub renders this Mermaid diagram directly in the README. It shows both the CI/CD deployment path and the live request and logging paths.
 
 ---
 
@@ -483,6 +473,18 @@ Built a production-style containerized Flask application deployed on **AWS ECS F
 
 ---
 
+# Production Considerations
+
+The current workflow builds an image tagged `latest`, pushes it to ECR, and asks ECS to start a new deployment. The repository demonstrates the deployment path, but does not define infrastructure or configure task autoscaling. To scale and operate it more reliably in production:
+
+* **Scale the service horizontally:** Run multiple Fargate tasks and distribute them across Availability Zones. Configure ECS Service Auto Scaling with target tracking (for example, CPU or memory utilization, or ALB requests per target), and set appropriate minimum and maximum task counts. Right-size task CPU and memory, then load-test and tune the scaling targets.
+* **Keep traffic on healthy tasks:** Retain the ALB target-group health check on `/health`; configure ECS deployment health percentages, a health-check grace period, and target deregistration delay so tasks can start and drain requests cleanly. Expand readiness checks if the application later depends on external services.
+* **Make releases traceable and reversible:** Replace the mutable `latest` tag with an immutable build identifier such as the Git commit SHA, and deploy that exact image through a new task-definition revision. This makes it clear which artifact is running and simplifies rollback.
+* **Keep application state outside tasks:** Fargate tasks can be added or replaced at any time, so keep the Flask service stateless. If the application gains sessions, uploads, or persistent data, store them in shared managed services (for example, ElastiCache, S3, or a managed database) rather than a task's local filesystem.
+* **Strengthen delivery and operations:** Use GitHub Actions OIDC with a narrowly scoped IAM role instead of long-lived AWS access keys. Add HTTPS with ACM, least-privilege network rules, image/dependency scanning, CloudWatch log retention, and alarms for errors, latency, unhealthy targets, and task count.
+
+---
+
 # 🚀 Future Improvements
 
 * HTTPS using ACM Certificates
@@ -512,4 +514,3 @@ Passionate about building real-world cloud infrastructure and automation using:
 
 📍 Pakistan
 🔗 GitHub: https://github.com/baqir-ops
-
